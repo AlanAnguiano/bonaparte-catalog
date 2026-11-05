@@ -1,0 +1,86 @@
+# Priority 5 — weakest free coverage; literal oversize only
+schema_version: 1
+rules_version: rules-v1
+captured_on: "2026-11-05"
+
+source_product:
+  internal_code: "34375"
+  part_number: "SP26-329R/L+20"
+  manufacturer: "SAFETY"
+  article_description: "PISTONES"
+  group: "PISTONES"
+  unit: "PZA"
+  retailer_description: "83-301 CHEVROLET SILVERADO V6 262 4.3 INC ECOTEC 12 VAL 14/18"
+
+catalog:
+  category: "Vehículo ligero"
+  system: "MOTOR"
+  subsystem: "COMPONENTES DEL BLOQUE DE CILINDROS"
+  product: "PISTÓN DE MOTOR"
+  description_template: >-
+    Pistón de motor Safety. Número SP26-329R/L+20.
+    Sobremedida +20 (0.50 mm / 0.020"). Sufijo R/L sin definición confirmada en fuente A.
+    Applications e intercambios pendientes de catálogo Safety verificable.
+
+notes:
+  - "No free Safety catalog page was found that clearly maps SP26-329 to Silverado EcoTec 4.3 2014-2018."
+  - "Related listing SPRG26-329R/L-S appears as a piston+rings set SKU pattern, not a verified fitment source."
+  - "+20 treated as literal oversize marker common in piston part numbers."
+  - "R/L left unresolved (possible right/left bank); do not invent Posición."
+  - "Retailer EcoTec 4.3 14/18 claim is confidence D until Safety confirms."
+
+sources:
+  - id: part_number_literal
+    name: "Literal parse of source part number SP26-329R/L+20"
+    url: null
+    retrieved_on: "2026-11-05"
+    confidence: A
+    note: "Only for oversize suffix interpretation."
+  - id: iglobal_sprg26_329
+    name: "iGlobalParts — SPRG26-329R/L-S set listing"
+    url: "https://iglobalparts.com/piston-ring-set-prg-10-5106-r-l-sizes/"
+    retrieved_on: "2026-11-05"
+    confidence: C
+    note: "Shows R/L and oversize size options exist in this product family; no vehicle matrix extracted."
+
+interchanges:
+  - part_number: "83-301"
+    brand: "Unknown"
+    origin: "Aftermarket"
+    export: false
+    confidence: D
+    source_ids: []
+    note: "Only in retailer description."
+
+attributes:
+  - class: "Sobremedida"
+    name: "Sobremedida"
+    unit: "mm"
+    value: "0.50"
+    export: true
+    confidence: A
+    source_ids: [part_number_literal]
+    note: "+20 interpreted as +0.020 in / +0.50 mm oversize."
+  - class: "Sobremedida"
+    name: "Código de sobremedida"
+    unit: null
+    value: "+20"
+    export: true
+    confidence: A
+    source_ids: [part_number_literal]
+  - class: "Tipo"
+    name: "Configuración R/L"
+    unit: null
+    value: "R/L (sin definir)"
+    export: false
+    confidence: C
+    source_ids: [iglobal_sprg26_329]
+    note: "Pattern exists; meaning not confirmed enough to export."
+
+applications: []
+
+rejected_or_unexported:
+  - kind: "application_claim"
+    detail: "Chevrolet Silverado V6 262 4.3 EcoTec 12V 14/18"
+    reason: "Retailer-only; no Safety A catalog confirmation found during capture"
+    export: false

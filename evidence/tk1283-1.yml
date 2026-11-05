@@ -1,0 +1,99 @@
+# Priority 4 — part number appears in aftermarket cross tables; source brand is REVO
+schema_version: 1
+rules_version: rules-v1
+captured_on: "2026-11-05"
+
+source_product:
+  internal_code: "1792"
+  part_number: "TK1283-1"
+  manufacturer: "REVO"
+  article_description: "KIT DE DISTRIBUCION"
+  group: "KIT DE DISTRIBUCION"
+  unit: "JUEGO"
+  retailer_description: "9-0511S SA-76260 DDM-77020 CHRYSLER DURANGO JOURNEY V6 3.6 SOHC 24 VAL PENTASTAR 11/13"
+
+catalog:
+  category: "Vehículo ligero"
+  system: "MOTOR"
+  subsystem: "COMPONENTES DEL TREN DE VÁLVULAS"
+  product: "KIT DE CADENA DE TIEMPO"
+  description_template: >-
+    Kit de cadena de tiempo. Número de parte TK1283-1 (marca de origen REVO).
+    Documentado en tablas de cruce aftermarket junto a Cloyes 9-0511S / Dayco KTC1372
+    bajo la marca Sumax para el mismo número. Applications vehiculares no exportadas
+    hasta confirmar catálogo REVO.
+
+notes:
+  - "FindItParts lists SUMAX TK1283-1 as a cross of Dayco KTC1372 and Cloyes 9-0511S."
+  - "Source workbook Fabricante is REVO, not Sumax. Same number ≠ automatic brand equivalence."
+  - "Therefore Cloyes/Dayco vehicle fitment is NOT copied onto REVO applications."
+  - "Retailer SOHC claim for Pentastar 3.6 is likely wrong (Pentastar is DOHC); ignore cam layout from retailer."
+
+sources:
+  - id: finditparts_dayco_ktc1372
+    name: "FindItParts — Dayco KTC1372 cross references"
+    url: "https://www.finditparts.com/products/16663863/dayco-ktc1372"
+    retrieved_on: "2026-11-05"
+    confidence: B
+    note: "Cross table lists SUMAX TK1283-1 with Cloyes 9-0511S."
+  - id: cloyes_pentastar_page
+    name: "Cloyes — Pentastar timing coverage for 9-0511S"
+    url: "https://cloyes.com/chrysler-pentastar-3-2-3-6l-dohc-v6-timing-chain-replacement/"
+    retrieved_on: "2026-11-05"
+    confidence: A
+    note: "Used only to confirm Cloyes 9-0511S identity; NOT used for REVO applications."
+
+interchanges:
+  - part_number: "9-0511S"
+    brand: "Cloyes"
+    origin: "Aftermarket"
+    export: true
+    confidence: B
+    source_ids: [finditparts_dayco_ktc1372]
+    note: "Cross-ref via Dayco KTC1372 table (Sumax TK1283-1). Aligns with retailer candidate."
+  - part_number: "KTC1372"
+    brand: "Dayco"
+    origin: "Aftermarket"
+    export: true
+    confidence: B
+    source_ids: [finditparts_dayco_ktc1372]
+  - part_number: "90511S"
+    brand: "NAPA"
+    origin: "Aftermarket"
+    export: true
+    confidence: B
+    source_ids: [finditparts_dayco_ktc1372]
+  - part_number: "3-1038S"
+    brand: "Melling"
+    origin: "Aftermarket"
+    export: true
+    confidence: B
+    source_ids: [finditparts_dayco_ktc1372]
+  - part_number: "SA-76260"
+    brand: "SA Gear"
+    origin: "Aftermarket"
+    export: false
+    confidence: D
+    source_ids: []
+    note: "Only in retailer description."
+  - part_number: "DDM-77020"
+    brand: "Unknown"
+    origin: "Aftermarket"
+    export: false
+    confidence: D
+    source_ids: []
+    note: "Only in retailer description; do not use ejemplo workbook."
+
+attributes: []
+
+applications: []
+
+rejected_or_unexported:
+  - kind: "applications_from_cloyes"
+    detail: "Full Cloyes 9-0511S / Dayco KTC1372 vehicle lists"
+    reason: "Would require treating REVO TK1283-1 as proven identical to Sumax/Cloyes kit; brand mismatch unresolved"
+    export: false
+  - kind: "application_claim"
+    detail: "Retailer Durango/Journey 3.6 Pentastar 11/13 SOHC"
+    reason: "Confidence D; cam layout likely incorrect; years narrower than Cloyes list"
+    export: false

@@ -1,0 +1,339 @@
+---
+alwaysApply: true
+---
+# Bonaparte — Contexto de arquitectura y decisiones técnicas
+
+## 1. Contexto del proyecto
+
+Bonaparte es una plataforma de catalogación automotriz cuyo objetivo es unificar, enriquecer y normalizar catálogos de refacciones provenientes de diferentes refaccionarias, fabricantes y fuentes de información.
+
+El problema actual consiste en recibir archivos Excel con información de productos automotrices, generalmente con datos como:
+
+- SKU o identificador.
+- Marca de la refacción.
+- Categoría.
+- Descripción original.
+- Número de parte.
+- Otros atributos disponibles.
+
+La información puede estar incompleta, duplicada, mal estructurada o utilizar diferentes nomenclaturas para representar el mismo producto.
+
+El sistema debe investigar, enriquecer, normalizar y validar la información para producir un catálogo confiable.
+
+Entre los resultados esperados se encuentran:
+
+- Aplicaciones vehiculares compatibles.
+- Equivalencias e intercambios entre números de parte.
+- Atributos técnicos normalizados.
+- Descripciones de producto mejoradas.
+- Identificación de duplicados.
+- Relaciones entre productos y vehículos.
+- Un reporte Excel estructurado con la información procesada.
+
+A largo plazo, el catálogo podrá utilizarse para alimentar una API B2B destinada a marketplaces y otras integraciones.
+
+## 2. Objetivo técnico
+
+Construir un pipeline de procesamiento de datos que permita importar archivos, investigar productos mediante diferentes proveedores, consolidar resultados, resolver inconsistencias y generar un catálogo normalizado.
+
+La arquitectura debe favorecer:
+
+- Separación de responsabilidades.
+- Procesamiento asíncrono.
+- Ejecución paralela de investigaciones.
+- Persistencia de resultados intermedios.
+- Trazabilidad de las fuentes.
+- Reprocesamiento selectivo.
+- Resultados reproducibles y deterministas.
+- Facilidad para incorporar nuevos proveedores de información.
+
+No se busca construir un sistema complejo de agentes autónomos. Se prefiere una arquitectura de workers especializados, coordinados mediante un orquestador.
+
+## 3. Arquitectura propuesta
+
+El procesamiento se divide en las siguientes etapas:
+
+### A. Importación
+
+El usuario podrá cargar un archivo Excel mediante una interfaz de importación.
+
+Responsabilidades:
+
+- Recibir el archivo.
+- Validar su formato y estructura.
+- Leer y extraer los productos.
+- Preservar la información original.
+- Mostrar una vista previa.
+- Crear una ejecución de importación.
+
+Cada importación debe representar una ejecución independiente mediante un registro `ImportRun`.
+
+### B. Extracción y preparación
+
+El parser será responsable de convertir las filas del Excel en productos estructurados.
+
+Debe distinguir entre:
+
+- Datos originales.
+- Datos normalizados preliminarmente.
+- Datos faltantes.
+- Errores de extracción.
+
+No se debe sobrescribir la información original del producto.
+
+### C. Investigación paralela
+
+Cada producto podrá ser investigado mediante diferentes proveedores independientes.
+
+Proveedores iniciales contemplados:
+
+1. AI Researcher:
+   - Interpretación de descripciones.
+   - Extracción de atributos.
+   - Identificación de posibles aplicaciones.
+   - Identificación de posibles equivalencias.
+
+2. Web Researcher:
+   - Investigación de catálogos públicos.
+   - Consulta de fabricantes.
+   - Extracción de información de páginas relevantes.
+   - Recuperación de evidencia y referencias.
+
+3. Catalog Researcher:
+   - Consulta de catálogos estructurados.
+   - APIs disponibles.
+   - Bases de datos de aplicaciones vehiculares.
+   - Fuentes de información previamente normalizadas.
+
+Cada proveedor debe tener responsabilidades acotadas y una interfaz común.
+
+Los proveedores deben ser intercambiables y permitir incorporar nuevas fuentes sin modificar el resto del pipeline.
+
+No todos los proveedores necesariamente tendrán las mismas capacidades.
+
+### D. Orquestación
+
+Un orquestador será responsable de coordinar la investigación.
+
+Debe:
+
+- Crear las tareas correspondientes.
+- Despachar jobs independientes.
+- Controlar estados de ejecución.
+- Registrar errores.
+- Gestionar reintentos.
+- Detectar cuándo finalizaron las investigaciones.
+- Iniciar el procesamiento posterior.
+
+No se debe asumir que los jobs terminarán simultáneamente.
+
+La finalización debe depender de estados persistidos y condiciones verificables, no de temporizadores arbitrarios.
+
+Un proveedor fallido no debe invalidar automáticamente los resultados de los demás.
+
+### E. Staging y almacenamiento intermedio
+
+Los resultados de los diferentes proveedores deben almacenarse antes de intentar consolidarlos.
+
+Se propone PostgreSQL como almacenamiento persistente intermedio.
+
+Los resultados originales deben conservarse, preferentemente mediante estructuras JSONB cuando su formato sea variable.
+
+Cada resultado debe permitir identificar:
+
+- Producto investigado.
+- Proveedor que generó el resultado.
+- Tipo de información.
+- Payload original.
+- Fuente o URL.
+- Fecha de recuperación.
+- Estado de procesamiento.
+
+No se deben transportar instancias completas de ActiveRecord entre jobs. Se deben utilizar identificadores y recuperar los registros desde la base de datos.
+
+### F. Normalización y resolución
+
+Esta etapa es responsable de convertir los resultados de investigación en información estructurada y consistente.
+
+Debe dividirse conceptualmente en:
+
+**Normalization**
+
+- Homologación de marcas.
+- Normalización de números de parte.
+- Normalización de nombres de vehículos.
+- Homologación de unidades.
+- Normalización de atributos técnicos.
+
+**Resolution**
+
+- Detección de duplicados.
+- Resolución de entidades.
+- Comparación de resultados entre proveedores.
+- Identificación de conflictos.
+- Selección de información respaldada por evidencia.
+
+**Validation**
+
+- Validación de campos obligatorios.
+- Verificación de relaciones.
+- Detección de información incompleta.
+- Identificación de incompatibilidades.
+- Clasificación de resultados según su nivel de verificación.
+
+La resolución de datos debe ser determinista siempre que sea posible.
+
+La IA puede participar en extracción, clasificación y generación de candidatos, pero no debe tener autoridad ilimitada para establecer relaciones definitivas.
+
+No se deben considerar equivalentes dos productos únicamente porque sus descripciones sean similares.
+
+### G. Catálogo canónico
+
+Una vez procesada la información, los datos aceptados deben almacenarse en entidades normalizadas.
+
+El catálogo debe distinguir entre:
+
+- Productos originales.
+- Productos canónicos.
+- Atributos.
+- Vehículos.
+- Aplicaciones vehiculares.
+- Equivalencias.
+- Fuentes y evidencias.
+- Estados de validación.
+
+Se debe conservar la relación entre la información original y los registros canónicos generados.
+
+### H. Exportación
+
+La generación del Excel debe ser una etapa independiente de la investigación.
+
+El exportador debe consumir información previamente procesada y persistida.
+
+Responsabilidades:
+
+- Consultar el catálogo.
+- Generar las hojas requeridas.
+- Mantener las relaciones correspondientes.
+- Aplicar el formato esperado.
+- Generar el archivo descargable.
+
+El exportador no debe ejecutar investigaciones, scraping ni llamadas a proveedores de IA.
+
+Esto permitirá modificar el formato del entregable sin repetir todo el procesamiento.
+
+## 4. Modelo de dominio conceptual
+
+Los siguientes modelos representan una propuesta inicial, no una estructura obligatoria.
+
+- ImportRun: representa una ejecución de importación.
+- Product: representa la refacción original.
+- ResearchTask: representa una investigación realizada por un proveedor.
+- ResearchResult: almacena los resultados originales de investigación.
+- Vehicle: representa un vehículo normalizado.
+- VehicleApplication: representa la compatibilidad entre un producto y un vehículo.
+- Interchange: representa una equivalencia entre productos o números de parte.
+- ProductAttribute: representa atributos técnicos normalizados.
+- CanonicalProduct: representa un producto consolidado.
+- VerificationRecord: almacena información sobre validaciones y evidencias.
+
+Las relaciones definitivas deberán diseñarse considerando el dominio real y los requisitos del entregable.
+
+Evitar crear modelos innecesarios o duplicar responsabilidades.
+
+## 5. Principios arquitectónicos
+
+### Persistencia antes que comunicación en memoria
+
+Los jobs deben comunicarse mediante identificadores y registros persistidos.
+
+No depender de objetos compartidos en memoria ni de estructuras que desaparezcan al terminar un proceso.
+
+### Trazabilidad
+
+Cada dato enriquecido debe conservar información suficiente para identificar su procedencia.
+
+Debe ser posible responder:
+
+- ¿De dónde salió este dato?
+- ¿Qué proveedor lo encontró?
+- ¿Cuándo se obtuvo?
+- ¿Qué reglas se aplicaron?
+- ¿Por qué se aceptó o rechazó?
+
+### Determinismo
+
+Al procesar nuevamente el mismo dataset con las mismas fuentes, resultados y reglas de resolución, el sistema debe producir resultados equivalentes.
+
+Las decisiones de normalización y deduplicación no deben depender del orden accidental de ejecución de los jobs.
+
+Las llamadas externas a IA y scraping deben tratarse como operaciones potencialmente variables y sus resultados deben persistirse para permitir reproducibilidad.
+
+### Idempotencia
+
+La ejecución de un job más de una vez no debe generar registros duplicados ni corromper resultados existentes.
+
+### Reprocesamiento selectivo
+
+Debe ser posible reintentar una investigación fallida o reprocesar un producto sin repetir investigaciones que ya terminaron correctamente.
+
+### Separación de responsabilidades
+
+La importación, investigación, normalización, resolución, validación y exportación deben permanecer desacopladas.
+
+## 6. Stack tecnológico
+
+El proyecto utiliza Ruby on Rails.
+
+Consideraciones:
+
+- PostgreSQL como base de datos principal.
+- ActiveJob para procesamiento asíncrono.
+- Redis y un backend de jobs compatible cuando sea necesario.
+- JSONB para resultados variables de investigación.
+- Servicios especializados para normalización y resolución.
+- Integraciones externas encapsuladas mediante proveedores.
+- Pruebas automatizadas para las reglas de negocio.
+
+Se debe priorizar el ecosistema existente del proyecto antes de incorporar nuevas dependencias.
+
+## 7. Estrategia de implementación
+
+Construir incrementalmente:
+
+1. Importación y parser de Excel.
+2. Modelado de productos e importaciones.
+3. Sistema de investigación y tracking de jobs.
+4. Primer proveedor de investigación funcional.
+5. Almacenamiento de resultados intermedios.
+6. Normalización, resolución y validación.
+7. Generación del catálogo.
+8. Exportación Excel.
+9. Incorporación de proveedores adicionales.
+10. Interfaz de seguimiento y revisión.
+
+No es necesario implementar todos los proveedores desde el inicio.
+
+Se debe priorizar un flujo completo y funcional antes de intentar resolver todos los casos posibles.
+
+## 8. Instrucciones para trabajar con este proyecto
+
+Antes de implementar cambios:
+
+1. Inspeccionar la estructura existente.
+2. Identificar los modelos, servicios, dependencias y convenciones actuales.
+3. Identificar qué partes de la arquitectura ya existen.
+4. Evitar duplicar funcionalidades.
+5. Presentar las decisiones arquitectónicas importantes antes de realizar cambios estructurales.
+
+No asumir que todas las entidades conceptuales deben convertirse inmediatamente en modelos ActiveRecord.
+
+No introducir abstracciones innecesarias ni patrones complejos sin una justificación concreta.
+
+Priorizar código legible, testeable y mantenible.
+
+Cuando existan varias alternativas, explicar brevemente sus ventajas y desventajas.
+
+La arquitectura debe ser suficientemente sólida para crecer, pero proporcional al alcance del challenge.
+
+**Objetivo final:** demostrar una solución de ingeniería capaz de transformar información automotriz desestructurada en un catálogo normalizado, trazable, verificable y reproducible.

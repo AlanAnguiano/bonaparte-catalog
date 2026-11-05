@@ -1,0 +1,228 @@
+# Priority 1 — strongest free manufacturer + sister-brand evidence
+schema_version: 1
+rules_version: rules-v1
+captured_on: "2026-11-05"
+
+source_product:
+  internal_code: "14481"
+  part_number: "RM-152"
+  manufacturer: "REXITE"
+  article_description: "BOMBA DE ACEITE"
+  group: "BOMBA DE ACEITE"
+  unit: "PZA"
+  retailer_description: "DM-152 NISSAN PICKUP L4 L6 1.8 2.4 2.0 KA24DE L20B DOHC SOHC 8V 12V 76/14"
+
+catalog:
+  category: "Vehículo ligero"
+  system: "MOTOR"
+  subsystem: "BOMBAS"
+  product: "BOMBA DE ACEITE DEL MOTOR"
+  description_template: >-
+    Bomba de aceite del motor. Tipo: de engranes. Presión: estándar. Volumen: estándar.
+    Material de carcasa: hierro fundido. Tracción: flecha de transmisión.
+    Altura: 154 mm. Ancho: 70 mm. Orificios de montaje: 4 × Ø 10 mm. Incluye junta.
+
+notes:
+  - "Retailer description mixes L4/L6 and multiple engines; DO NOT export those claims."
+  - "Rexite catalog lists KA24E 12V applications only for RM-152."
+  - "Melling M152 used as level-B sister brand after Rexite lists interchange MA152."
+
+sources:
+  - id: rexite_catalog_2023
+    name: "Rexite Catálogo Bombas de Aceite 2023"
+    url: "https://rexite.net/wp-content/uploads/2025/10/CATALOGO-BOMBAS-DE-ACEITE-REXITE-2023.pdf"
+    retrieved_on: "2026-11-05"
+    confidence: A
+  - id: partshawk_melling_m152
+    name: "PartsHawk — Melling M152"
+    url: "https://partshawk.com/melling-m152-engine-oil-pump.html"
+    retrieved_on: "2026-11-05"
+    confidence: B
+    note: "Valid for attributes/OEM interchanges only after Rexite documents MA152 interchange."
+
+interchanges:
+  - part_number: "M152"
+    brand: "Melling"
+    origin: "Aftermarket"
+    export: true
+    confidence: A
+    source_ids: [rexite_catalog_2023]
+    note: "Rexite lists INTERCAMBIO MA152 for RM-152."
+  - part_number: "DM-152"
+    brand: "Dynagear"
+    origin: "Aftermarket"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+    note: "Listed on M152 interchange table; also appears in retailer description as candidate."
+  - part_number: "15010-F450A"
+    brand: "Nissan"
+    origin: "OEM"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - part_number: "15010-40F0A"
+    brand: "Nissan"
+    origin: "OEM"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - part_number: "15010-3S500"
+    brand: "Nissan"
+    origin: "OEM"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - part_number: "15010-40F00"
+    brand: "Nissan"
+    origin: "OEM"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+
+attributes:
+  - class: "Tipo"
+    name: "Tipo de bomba de aceite"
+    unit: null
+    value: "Gear"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Tipo"
+    name: "Tipo de presión de bomba de aceite"
+    unit: null
+    value: "Standard Pressure"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Tipo"
+    name: "Tipo de volumen de bomba de aceite"
+    unit: null
+    value: "Standard Volume"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Material"
+    name: "Material de la carcasa"
+    unit: null
+    value: "Cast Iron"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Tipo"
+    name: "Tipo de tracción"
+    unit: null
+    value: "Drive Shaft"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Altura"
+    name: "Altura"
+    unit: "mm"
+    value: "154"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Ancho"
+    name: "Ancho"
+    unit: "mm"
+    value: "70"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Cantidad"
+    name: "Cantidad de orificios de montaje"
+    unit: null
+    value: "4"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Diámetro"
+    name: "Diámetro del orificio de montaje"
+    unit: "mm"
+    value: "10"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+  - class: "Junta"
+    name: "Junta o empaque incluido"
+    unit: null
+    value: "Sí"
+    export: true
+    confidence: B
+    source_ids: [partshawk_melling_m152]
+
+# Compact applications from Rexite A. Year expansion only; no fabricated submodels/markets.
+applications:
+  - vehicle_make: "Nissan"
+    model: "Frontier"
+    submodel: null
+    year_from: 1998
+    year_to: 2004
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [rexite_catalog_2023]
+  - vehicle_make: "Nissan"
+    model: "Xterra"
+    submodel: null
+    year_from: 2000
+    year_to: 2004
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [rexite_catalog_2023]
+  - vehicle_make: "Nissan"
+    model: "Pickup"
+    submodel: null
+    year_from: 1989
+    year_to: 2004
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [rexite_catalog_2023]
+    note: "Rexite text: PICK UP ESTAQUITAS ... 1989-2004 with KA24E."
+  - vehicle_make: "Nissan"
+    model: "240SX"
+    submodel: null
+    year_from: 1989
+    year_to: 2004
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [rexite_catalog_2023]
+    note: "Rexite lists 240SX in the same RM-152 line; year span taken from catalog line 1989-2004."
+
+rejected_or_unexported:
+  - kind: "application_claim"
+    detail: "Retailer L6 / L20B / KA24DE / 76/14 broad claim"
+    reason: "Conflicts with or exceeds Rexite A catalog; confidence D"
+    export: false

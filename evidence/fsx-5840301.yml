@@ -1,0 +1,200 @@
+# Priority 2 — Fraco official product PDF
+schema_version: 1
+rules_version: rules-v1
+captured_on: "2026-11-05"
+
+source_product:
+  internal_code: "6536"
+  part_number: "FSX-5840301"
+  manufacturer: "FRACO"
+  article_description: "JUEGO DE EMPAQUES"
+  group: "JUEGO DE EMPAQUES"
+  unit: "JUEGO"
+  retailer_description: "QJC20G FS-001225 JC20 NISSAN PICK UP 4 CIL 2.4 KA24E SOHC 12 VAL 89/03"
+
+catalog:
+  category: "Vehículo ligero"
+  system: "MOTOR"
+  subsystem: "JUNTAS Y SISTEMAS DE SELLADO"
+  product: "JUEGO DE EMPAQUES DE MOTOR"
+  description_template: >-
+    Juego de empaques de motor para sellar las uniones del motor.
+    Motor KA24E SOHC. Cilindrada 2389 cc. Diámetro de pistón / cilindro: 89 mm.
+    Combustible: gasolina.
+
+notes:
+  - "Fraco PDF product code appears as FS5840301 / HG5840301SB; treated as same family as FSX-5840301."
+  - "Retailer year span 89/03 is broader than several Fraco model rows; manufacturer years win."
+  - "Interchanges QJC20G / FS-001225 / JC20 remain candidates until Fraco confirms; not exported as verified yet."
+
+sources:
+  - id: fraco_fs5840301_pdf
+    name: "FRACO — Catálogo / Manual FS5840301"
+    url: "https://www.fraco.com.co/images/QR/FS5840301.pdf"
+    retrieved_on: "2026-11-05"
+    confidence: A
+
+interchanges:
+  - part_number: "FS-001225"
+    brand: "Unknown"
+    origin: "Aftermarket"
+    export: false
+    confidence: D
+    source_ids: []
+    note: "Only in retailer description; needs manufacturer confirmation."
+  - part_number: "JC20"
+    brand: "Unknown"
+    origin: "Aftermarket"
+    export: false
+    confidence: D
+    source_ids: []
+    note: "Only in retailer description."
+  - part_number: "QJC20G"
+    brand: "Unknown"
+    origin: "Aftermarket"
+    export: false
+    confidence: D
+    source_ids: []
+    note: "Only in retailer description."
+
+attributes:
+  - class: "Diámetro"
+    name: "Diámetro"
+    unit: "mm"
+    value: "89"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - class: "Número"
+    name: "Cilindrada"
+    unit: "cc"
+    value: "2389"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - class: "Tipo"
+    name: "Código de motor"
+    unit: null
+    value: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - class: "Tipo"
+    name: "Distribución"
+    unit: null
+    value: "SOHC"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - class: "Número"
+    name: "Número de válvulas"
+    unit: null
+    value: "12"
+    export: true
+    confidence: B
+    source_ids: [fraco_fs5840301_pdf]
+    note: "KA24E on Fraco sheet; retailer states 12 VAL. Accepted as B."
+
+applications:
+  - vehicle_make: "Nissan"
+    model: "240SX"
+    submodel: null
+    year_from: 1989
+    year_to: 1992
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - vehicle_make: "Nissan"
+    model: "Pathfinder"
+    submodel: null
+    year_from: 1990
+    year_to: 1995
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - vehicle_make: "Nissan"
+    model: "Pickup D21"
+    submodel: null
+    year_from: 1994
+    year_to: 1999
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - vehicle_make: "Nissan"
+    model: "Silvia"
+    submodel: null
+    year_from: 1989
+    year_to: 1992
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - vehicle_make: "Nissan"
+    model: "Terrano II"
+    submodel: null
+    year_from: 1993
+    year_to: 1999
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+  - vehicle_make: "Nissan"
+    model: "Vanette"
+    submodel: null
+    year_from: 1990
+    year_to: 1992
+    liters: "2.4"
+    cc: "2389"
+    cid: null
+    cylinders: 4
+    block: "L"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "KA24E"
+    export: true
+    confidence: A
+    source_ids: [fraco_fs5840301_pdf]
+
+rejected_or_unexported:
+  - kind: "year_span"
+    detail: "Retailer 89/03 for Pickup"
+    reason: "Fraco lists Pickup D21 only 1994-1999; manufacturer wins"
+    export: false

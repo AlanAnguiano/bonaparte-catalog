@@ -1,0 +1,195 @@
+# Priority 3 — Elgin official identity; applications kept compact
+schema_version: 1
+rules_version: rules-v1
+captured_on: "2026-11-05"
+
+source_product:
+  internal_code: "36834"
+  part_number: "HL-7025S"
+  manufacturer: "ELGIN"
+  article_description: "PUNTERIAS"
+  group: "PUNTERIAS"
+  unit: "PZA"
+  retailer_description: "HL7011 CHEVROLET V8 294 4.3 VORTEC 325 5.3 LS1 , 6.0 6.2 VORTEC 16 VAL 99/23 CON RESORTE"
+
+catalog:
+  category: "Vehículo ligero"
+  system: "MOTOR"
+  subsystem: "COMPONENTES DEL TREN DE VÁLVULAS"
+  product: "PUNTERÍA HIDRÁULICA"
+  description_template: >-
+    Puntería hidráulica de rodillo con desactivación de cilindros (DFM),
+    compatible también con aplicaciones AFM previas. Incluye resorte de seguridad.
+    Reemplaza el diseño AFM-only HL-7011 en motores AFM; requerida en DFM.
+
+notes:
+  - "Elgin base number is HL-7025; source SKU is HL-7025S (sold each / with spring suffix)."
+  - "Retailer description incorrectly calls 4.3 a V8 and mixes unrelated claims; ignored for applications."
+  - "Elgin states they are still compiling full VIN/application lists; export only compact platform rows."
+
+sources:
+  - id: elgin_afm_dfm_page
+    name: "Elgin Industries — Made in USA AFM Lifters"
+    url: "https://www.elginind.com/usa-made-ls-engine-afm-lifter-sets-active-fuel-management-oe-replacement/"
+    retrieved_on: "2026-11-05"
+    confidence: A
+
+interchanges:
+  - part_number: "HL-7011"
+    brand: "ELGIN"
+    origin: "Aftermarket"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+    note: "Prior AFM-only design. HL-7025 supersedes for AFM and also covers DFM; not a full two-way equivalent on DFM engines."
+  - part_number: "12698946"
+    brand: "GM"
+    origin: "OEM"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+    note: "OEM listed for DFM lifter HL-7025."
+  - part_number: "12571595"
+    brand: "GM"
+    origin: "OEM"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+    note: "OEM listed under AFM lifter family; HL-7025 also fits AFM."
+  - part_number: "12619820"
+    brand: "GM"
+    origin: "OEM"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+  - part_number: "12639516"
+    brand: "GM"
+    origin: "OEM"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+
+attributes:
+  - class: "Tipo"
+    name: "Tipo de puntería"
+    unit: null
+    value: "Hydraulic roller AFM/DFM"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+  - class: "Tipo"
+    name: "Compatibilidad AFM"
+    unit: null
+    value: "Sí (2007+)"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+  - class: "Tipo"
+    name: "Compatibilidad DFM"
+    unit: null
+    value: "Sí (2019+)"
+    export: true
+    confidence: A
+    source_ids: [elgin_afm_dfm_page]
+  - class: "Incluye"
+    name: "Resorte de seguridad"
+    unit: null
+    value: "Sí"
+    export: true
+    confidence: B
+    source_ids: [elgin_afm_dfm_page]
+    note: "Elgin documents spring-as-fuse design; retailer states CON RESORTE."
+
+# Only vehicle families Elgin names explicitly for DFM. No AFM year×model matrix published yet.
+applications:
+  - vehicle_make: "Chevrolet"
+    model: "Silverado 1500"
+    submodel: null
+    year_from: 2019
+    year_to: 2023
+    liters: null
+    cc: null
+    cid: null
+    cylinders: 8
+    block: "V"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "DFM"
+    export: true
+    confidence: B
+    source_ids: [elgin_afm_dfm_page]
+    note: "Elgin mentions 2019+ GM 1500 DFM introduction; exact engine codes/trims not listed."
+  - vehicle_make: "Chevrolet"
+    model: "Suburban"
+    submodel: null
+    year_from: 2019
+    year_to: 2023
+    liters: null
+    cc: null
+    cid: null
+    cylinders: 8
+    block: "V"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "DFM"
+    export: true
+    confidence: B
+    source_ids: [elgin_afm_dfm_page]
+  - vehicle_make: "Chevrolet"
+    model: "Tahoe"
+    submodel: null
+    year_from: 2019
+    year_to: 2023
+    liters: null
+    cc: null
+    cid: null
+    cylinders: 8
+    block: "V"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "DFM"
+    export: true
+    confidence: B
+    source_ids: [elgin_afm_dfm_page]
+  - vehicle_make: "GMC"
+    model: "Yukon"
+    submodel: null
+    year_from: 2019
+    year_to: 2023
+    liters: null
+    cc: null
+    cid: null
+    cylinders: 8
+    block: "V"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "DFM"
+    export: true
+    confidence: B
+    source_ids: [elgin_afm_dfm_page]
+  - vehicle_make: "Cadillac"
+    model: "Escalade"
+    submodel: null
+    year_from: 2019
+    year_to: 2023
+    liters: null
+    cc: null
+    cid: null
+    cylinders: 8
+    block: "V"
+    fuel: "Gasolina"
+    market: null
+    engine_code: "DFM"
+    export: true
+    confidence: B
+    source_ids: [elgin_afm_dfm_page]
+
+rejected_or_unexported:
+  - kind: "application_claim"
+    detail: "Retailer Chevrolet V8 294 4.3 / LS1 / 6.0 6.2 99/23"
+    reason: "Internally inconsistent and not Elgin's published matrix; confidence D"
+    export: false
+  - kind: "application_span"
+    detail: "2007+ AFM fitment of HL-7025"
+    reason: "Elgin affirms AFM compatibility but has not published a model/year matrix; omitted rather than inventing"
+    export: false
