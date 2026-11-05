@@ -59,7 +59,7 @@ end
 gem "rspec-rails", "~> 8.0", groups: [ :development, :test ]
 
 # Excel import / export for the catalog enrichment pipeline
-gem "roo", "~> 2.10"
+gem "roo", "~> 4.0"
 gem "caxlsx", "~> 4.2"
 # Ruby 3.4+: csv is no longer a default gem; required by roo
 gem "csv"
