@@ -148,3 +148,9 @@ Parcial a propósito (vacío documentado > inventar):
 | [docs/mvp-scope.md](docs/mvp-scope.md) | Alcance MVP |
 | [docs/code-audit.md](docs/code-audit.md) | Audit / RuboCop / KISS |
 | [evidence/README.md](evidence/README.md) | Captura de evidencia |
+
+## Tiempo invertido
+
+Invertí aproximadamente **4–5 horas** en total.
+
+Gran parte de ese tiempo fue en explorar enfoques, herramientas y fuentes de datos (qué había gratis vs de pago, qué se podía verificar y qué no), cerrar la arquitectura y capturar la evidencia. La implementación del pipeline, la UI y los tests fue más rápida porque las decisiones ya estaban cerradas antes de codear, no al vuelo.
