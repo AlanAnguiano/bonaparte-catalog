@@ -26,7 +26,6 @@ notes:
   - "Retailer description mixes L4/L6 and multiple engines; DO NOT export those claims."
   - "Rexite catalog lists KA24E 12V applications only for RM-152."
   - "Melling M152 used as level-B sister brand after Rexite lists interchange MA152."
-
 sources:
   - id: rexite_catalog_2023
     name: "Rexite Catálogo Bombas de Aceite 2023"

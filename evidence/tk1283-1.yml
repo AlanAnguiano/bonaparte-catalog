@@ -18,10 +18,9 @@ catalog:
   subsystem: "COMPONENTES DEL TREN DE VÁLVULAS"
   product: "KIT DE CADENA DE TIEMPO"
   description_template: >-
-    Kit de cadena de tiempo. Número de parte TK1283-1 (marca de origen REVO).
-    Documentado en tablas de cruce aftermarket junto a Cloyes 9-0511S / Dayco KTC1372
-    bajo la marca Sumax para el mismo número. Applications vehiculares no exportadas
-    hasta confirmar catálogo REVO.
+    Kit de cadena de tiempo para sincronizar el movimiento del cigüeñal y los árboles
+    de levas. Equivalencias aftermarket documentadas incluyen Cloyes 9-0511S,
+    Dayco KTC1372, NAPA 90511S y Melling 3-1038S.
 
 notes:
   - "FindItParts lists SUMAX TK1283-1 as a cross of Dayco KTC1372 and Cloyes 9-0511S."

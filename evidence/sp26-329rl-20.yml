@@ -18,9 +18,8 @@ catalog:
   subsystem: "COMPONENTES DEL BLOQUE DE CILINDROS"
   product: "PISTÓN DE MOTOR"
   description_template: >-
-    Pistón de motor Safety. Número SP26-329R/L+20.
-    Sobremedida +20 (0.50 mm / 0.020"). Sufijo R/L sin definición confirmada en fuente A.
-    Applications e intercambios pendientes de catálogo Safety verificable.
+    Pistón de motor para el conjunto móvil del cilindro. Sobremedida de 0.50 mm
+    (+0.020") según el sufijo +20 del número de parte.
 
 notes:
   - "No free Safety catalog page was found that clearly maps SP26-329 to Silverado EcoTec 4.3 2014-2018."

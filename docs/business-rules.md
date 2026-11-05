@@ -74,7 +74,7 @@ Si dos fuentes A/B conflictúan: gana la del **fabricante del SKU** (nivel A pro
 
 - Solo hechos A/B (o literales inequívocos del part number, p. ej. `+20`).
 - Unidades normalizadas a `mm` cuando la fuente da mm.
-- No mezclar idiomas arbitrariamente: preferir español en labels de clase/atributo cuando escribamos nosotros; valores técnicos pueden quedar como en la fuente (`Cast Iron`, `Gear`) si se citan textualmente — documentar en evidence.
+- Preferir español en labels de clase/atributo. Los valores pueden quedar como en la fuente técnica (`Cast Iron`, `Gear`) cuando así vienen documentados.
 
 ---
 
