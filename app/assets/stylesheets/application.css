@@ -1,10 +1,153 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+:root {
+  --ink: #1c2430;
+  --muted: #5b6675;
+  --paper: #f3f5f8;
+  --card: #ffffff;
+  --accent: #1f4f7a;
+  --accent-soft: #e8f1fa;
+  --accent-border: #b7d0e8;
+  --danger-bg: #fde8e8;
+  --danger-ink: #8b1a1a;
+  --shadow: 0 12px 32px rgba(28, 36, 48, 0.1), 0 2px 8px rgba(28, 36, 48, 0.06);
+  --radius: 14px;
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.55;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, #d9e6f4 0%, transparent 55%),
+    radial-gradient(ellipse 70% 40% at 100% 0%, #e4ebe4 0%, transparent 50%),
+    var(--paper);
+}
+
+.page {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.25rem 4rem;
+}
+
+.brand {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.lede {
+  margin: 0 0 1.75rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.alert {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: var(--danger-bg);
+  color: var(--danger-ink);
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem 1.4rem 1.35rem;
+  border: 1px solid rgba(28, 36, 48, 0.06);
+}
+
+.card-title {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.field {
+  margin: 0 0 1.15rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.field input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1px dashed var(--accent-border);
+  border-radius: 10px;
+  background: #f8fbfe;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.actions {
+  margin: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #183e61;
+}
+
+.hint {
+  margin: 1.35rem 0 0;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: #2a4a66;
+  font-size: 0.92rem;
+}
+
+.hint code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.86em;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+}
+
+.footnote {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
