@@ -57,3 +57,13 @@ group :development do
 end
 
 gem "rspec-rails", "~> 8.0", groups: [:development, :test]
+
+# Excel import / export for the catalog enrichment pipeline
+gem "roo", "~> 2.10"
+gem "caxlsx", "~> 4.2"
+# Ruby 3.4+: csv is no longer a default gem; required by roo
+gem "csv"
+
+# json 3.x dropped `quirks_mode`, which rack-session 2.1.x still passes when
+# committing cookie sessions (breaks CSRF/form pages).
+gem "json", "< 3"
