@@ -6,6 +6,45 @@ Sin red, scrapers ni LLM en runtime. Mismo input → mismo resultado lógico.
 
 ---
 
+## Setup
+
+```bash
+bundle install
+bin/rails db:prepare
+```
+
+Requisitos: Ruby 3.4+, PostgreSQL (boot de Rails; el pipeline no guarda el catálogo en DB), Bundler.
+
+## Probar en la UI
+
+```bash
+bin/rails server
+```
+
+Abre `http://localhost:3000`, sube un `.xlsx` con hoja `Origen` (por ejemplo `data/data_prueba_técnica.xlsx`) y descarga el catálogo enriquecido.
+
+## Alternativa por CLI
+
+```bash
+bin/rails catalog:enrich
+```
+
+```bash
+INPUT=data/data_prueba_técnica.xlsx \
+OUTPUT=output/catalogo_enriquecido.xlsx \
+bin/rails catalog:enrich
+```
+
+## Tests
+
+```bash
+bundle exec rspec
+```
+
+Import, evidence, resolve, export, rerun determinista y UI.
+
+---
+
 ## Cómo tomé las decisiones
 
 ### 1. Entender el problema primero
@@ -86,45 +125,6 @@ Si esto escalara a producto real, estos son los siguientes pasos que considerar�
 | Revisión humana | Cola de conflictos low-confidence antes de exportar |
 
 Conecta con la visión B, manteniendo el corte determinista del export.
-
----
-
-## Setup
-
-```bash
-bundle install
-bin/rails db:prepare
-```
-
-Requisitos: Ruby 3.4+, PostgreSQL (boot de Rails; el pipeline no guarda el catálogo en DB), Bundler.
-
-## Probar en la UI
-
-```bash
-bin/rails server
-```
-
-Abre `http://localhost:3000`, sube un `.xlsx` con hoja `Origen` (por ejemplo `data/data_prueba_técnica.xlsx`) y descarga el catálogo enriquecido.
-
-## Alternativa por CLI
-
-```bash
-bin/rails catalog:enrich
-```
-
-```bash
-INPUT=data/data_prueba_técnica.xlsx \
-OUTPUT=output/catalogo_enriquecido.xlsx \
-bin/rails catalog:enrich
-```
-
-## Tests
-
-```bash
-bundle exec rspec
-```
-
-Import, evidence, resolve, export, rerun determinista y UI.
 
 ## Cobertura de los 5 productos
 
