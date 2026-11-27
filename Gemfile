@@ -66,4 +66,4 @@ gem "csv"
 
 # json 3.x dropped `quirks_mode`, which rack-session 2.1.x still passes when
 # committing cookie sessions (breaks CSRF/form pages).
-gem "json", "< 3"
+gem "json", "< 4"
